@@ -139,6 +139,9 @@ $(function () {
     var timeFormat = "regular";
 
     $.each(workingPlanSorted, function (index, workingDay) {
+        if($('#working_plan').val() !==''){
+            var schedule = jQuery.parseJSON($('#working_plan').val());
+
         // var day = convertValueToDay(index);
         //
         // var dayDisplayName = day;
@@ -185,14 +188,15 @@ $(function () {
         // })
         //     .appendTo('.working-plan tbody');
 
-        if (workingDay) {
+        if (schedule[index] != null) {
             $('#' + index).prop('checked', true);
-            $('#' + index + '-start').val('08:00');
-            $('#' + index + '-end').val('16:00');
+            $('#' + index + '-start').val(schedule[index]['start']);
+            $('#' + index + '-end').val(schedule[index]['end']);
         } else {
             $('#' + index).prop('checked', false);
-            $('#' + index + '-start').prop('disabled', true);
-            $('#' + index + '-end').prop('disabled', true);
+            $('#' + index + '-start').prop('disabled', true).val('');
+            $('#' + index + '-end').prop('disabled', true).val('');
+        }
         }
     });
 
@@ -228,7 +232,9 @@ $(function () {
     }
 
     $('.submit').on('click', function() {
-        saveWorkingPlan();
+        if($("#medic").is(':checked')) {
+            saveWorkingPlan();
+        }
         $('#userform').submit();
     });
 

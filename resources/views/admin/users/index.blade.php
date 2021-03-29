@@ -39,7 +39,7 @@
                         <h1 class="m-0">Staff</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6 ">
-                        <span class="breadcrumb float-sm-right"><a class="btn btn-block btn-primary" href="{{ route('speciality.create') }}">Adauga Membru</a></span>
+                        <span class="breadcrumb float-sm-right"><a class="btn btn-block btn-primary" href="{{ route('user.create') }}">Adauga Membru</a></span>
 
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -60,31 +60,39 @@
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
+                                        <th>Nume</th>
+                                        <th>Email</th>
+                                        <th>Tip Cont</th>
+                                        <th>Drepturi Administrare</th>
                                         <th>Specialitate</th>
-                                        <th>Cu plata</th>
                                         <th>Modifica</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($users as $user)
                                     <tr>
-                                        <td>{{ $speciality->name }}</td>
-                                        <td>{{ $speciality->is_paid == 1 ? 'DA':'NU' }}
-                                        </td>
-                                        <td><div class="mng-icons"><a class="btn btn-default" style="display: inline-block;" href="{{ route('speciality.edit', $speciality) }}"><i class="far fa-edit"></i></a>
-                                            <form style="display: inline-block;" action="{{ route('speciality.delete', $speciality) }}" method="post">
+                                        <td>{{ $user->name . ' '. $user->lname }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>{{ $user->settings->speciality_id == null ? 'Administrativ':'Medic' }}</td>
+                                        <td>{{ $user->settings->is_admin == 1 ? 'DA':'NU' }}</td>
+                                        <td>{{ optional($user->settings->speciality)->name }}</td>
+                                        <td><div class="mng-icons"><a class="btn btn-default" style="display: inline-block;" href="{{ route('user.edit', $user) }}"><i class="far fa-edit"></i></a>
+                                            <form style="display: inline-block;" action="{{ route('user.delete', $user) }}" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 <button class="btn btn-default" type="submit"><i class="far fa-trash-alt"></i></button>
-                                            </form></td></div>
+                                            </form></div>
                                             </td>
                                     </tr>
                                     @endforeach
                                     </tbody>
                                     <tfoot>
                                     <tr>
+                                        <th>Nume</th>
+                                        <th>Email</th>
+                                        <th>Tip Cont</th>
+                                        <th>Drepturi Administrare</th>
                                         <th>Specialitate</th>
-                                        <th>Cu plata</th>
                                         <th>Modifica</th>
                                     </tr>
                                     </tfoot>

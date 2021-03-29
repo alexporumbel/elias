@@ -76,7 +76,7 @@
                                                 @csrf
                                                 @method('delete')
                                                 <button class="btn btn-default" type="submit"><i class="far fa-trash-alt"></i></button>
-                                            </form></td></div>
+                                            </form></div>
                                             </td>
                                     </tr>
                                     @endforeach

@@ -201,7 +201,7 @@
                                     </div>
                                     <div class="form-group speciality">
                                         <label>Specialitate</label>
-                                        <select class="custom-select">
+                                        <select name="speciality" class="custom-select">
                                             <option value="null">Fara specialitate</option>
                                             @foreach($specialities as $speciality)
                                                 <option value="{{ $speciality->id }}">{{ $speciality->name }}</option>
@@ -224,7 +224,7 @@
                                                 <td>
                                                     <div class="icheck-primary form-check"><input
                                                             class="form-check-input" type="checkbox" id="monday"
-                                                            name="monday" {{ old('monday') }}><label
+                                                            name="monday" checked><label
                                                             class="form-check-label" for="monday">Luni</label></div>
                                                 </td>
                                                 <td><input id="monday-start" value="08:00"

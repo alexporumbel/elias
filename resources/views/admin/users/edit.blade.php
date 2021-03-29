@@ -70,6 +70,7 @@
                 $('[name="is_admin"]').prop('disabled', false);
             } else {
                 $('.speciality').hide();
+                $('.speciality').val(null);
                 $('.schedule').hide();
                 $('[name="is_admin"]').prop('checked', true);
                 $('[name="is_admin"]').prop('disabled', true);
@@ -141,18 +142,19 @@
                             <!-- form start -->
                             <form id="userform" method="POST" action="{{ route('user.update', $user) }}">
                                 @csrf
+                                @method('PUT')
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label class="d-block" for="tipcont">Tip Cont</label>
                                         <div class="icheck-danger d-inline">
-                                            <input type="radio" name="tip_cont" value="medic" checked
+                                            <input type="radio" name="tip_cont" value="medic" {{ $user->settings->speciality_id != null ? 'checked':'' }}
                                                    id="medic">
                                             <label for="medic">
                                                 Medic
                                             </label>
                                         </div>
                                         <div class="icheck-danger d-inline">
-                                            <input type="radio" name="tip_cont" value="administrativ" id="admin" {{(old('tip_cont') === 'administrativ') ? 'checked' : ''}}>
+                                            <input type="radio" name="tip_cont" value="administrativ" id="admin" {{ $user->settings->speciality_id == null ? 'checked':'' }} {{(old('tip_cont') === 'administrativ') ? 'checked' : ''}}>
                                             <label for="admin">
                                                 Administrativ
                                             </label>
@@ -201,10 +203,10 @@
                                     </div>
                                     <div class="form-group speciality">
                                         <label>Specialitate</label>
-                                        <select class="custom-select">
+                                        <select name="speciality" class="custom-select">
                                             <option value="null">Fara specialitate</option>
                                             @foreach($specialities as $speciality)
-                                                <option  value="{{ $speciality->id }}">{{ $speciality->name }}</option>
+                                                <option value="{{ $speciality->id }}" {{ ($user->settings->speciality_id == $speciality->id) ? 'selected':'' }}>{{ $speciality->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -224,7 +226,7 @@
                                                 <td>
                                                     <div class="icheck-primary form-check"><input
                                                             class="form-check-input" type="checkbox" id="monday"
-                                                            name="monday" {{ old('monday') }}><label
+                                                            checked><label
                                                             class="form-check-label" for="monday">Luni</label></div>
                                                 </td>
                                                 <td><input id="monday-start" value="08:00"
@@ -306,11 +308,11 @@
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <input type="hidden" id="working_plan" name="working_plan" value="">
+                                        <input type="hidden" id="working_plan" name="working_plan" value="{{ $user->settings->working_plan }}">
                                     </div>
 
                                     <div class="icheck-primary d-inline">
-                                        <input type="checkbox" name="is_admin" id="checkboxPrimary3">
+                                        <input type="checkbox" name="is_admin" id="checkboxPrimary3" {{ $user->settings->is_admin == 1 ? 'checked':'' }}>
                                         <label for="checkboxPrimary3">
                                             Aloca drepturi de administrator
                                         </label>
