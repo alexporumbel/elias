@@ -137,14 +137,14 @@ class UserController extends Controller
 
         $userSettings = $user->settings;
 
-        if(request('speciality') != null){
+        if(request('speciality') !== 'null'){
             $userSettings->speciality_id = request('speciality');
             $userSettings->is_admin = request('is_admin') == 'on' ? 1 : 0;
             $userSettings->working_plan = request('working_plan');
             $userSettings->update();
         }else{
             $userSettings->speciality_id = null;
-            $userSettings->is_admin = request('is_admin') == 'on' ? 1 : 0;
+            $userSettings->is_admin =  1;
             $userSettings->working_plan = null;
             $userSettings->update();
         }

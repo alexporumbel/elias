@@ -70,7 +70,7 @@
                 $('[name="is_admin"]').prop('disabled', false);
             } else {
                 $('.speciality').hide();
-                $('.speciality').val(null);
+                $('.custom-select option:eq(0)').prop('selected', true)
                 $('.schedule').hide();
                 $('[name="is_admin"]').prop('checked', true);
                 $('[name="is_admin"]').prop('disabled', true);
