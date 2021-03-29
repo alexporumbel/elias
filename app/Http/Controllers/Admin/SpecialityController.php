@@ -95,6 +95,7 @@ class SpecialityController extends Controller
         return back();
     }
 
+
     public function validateSpeciality()
     {
         return request()->validate([

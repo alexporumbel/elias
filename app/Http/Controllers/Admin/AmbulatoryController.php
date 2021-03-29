@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ambulatory;
+use App\Models\MedicalSpeciality;
 use Illuminate\Http\Request;
 
 class AmbulatoryController extends Controller
@@ -19,7 +21,8 @@ class AmbulatoryController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $ambulatories = Ambulatory::all();
+        return view('admin.ambulatory.index', ['ambulatories'=> $ambulatories]);
     }
 
     /**
@@ -29,7 +32,10 @@ class AmbulatoryController extends Controller
      */
     public function create()
     {
-        //
+        $specialities = MedicalSpeciality::all();
+        return view('admin.ambulatory.create', [
+            'specialities' => $specialities,
+        ]);
     }
 
     /**
@@ -43,39 +49,6 @@ class AmbulatoryController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -83,8 +56,9 @@ class AmbulatoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ambulatory $ambulatory)
     {
-        //
+        $ambulatory->delete();
+        return back();
     }
 }

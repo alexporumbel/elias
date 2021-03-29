@@ -18,7 +18,6 @@ Route::get('/', function () {
 });
 
 Route::redirect('/admin', '/admin/ambulatory', 301);
-Route::get('/admin/ambulatory', 'admin\AmbulatoryController@index')->name('ambulatory');
 Route::get('/admin/hospitalization', 'admin\AmbulatoryController@index')->name('hospitalization');
 Route::get('/admin/recovery', 'admin\AmbulatoryController@index')->name('recovery');
 
@@ -29,17 +28,16 @@ Route::post('/admin/speciality', 'admin\SpecialityController@store')->name('spec
 Route::get('/admin/speciality/create', 'admin\SpecialityController@create')->name('speciality.create');
 Route::put('/admin/speciality/{speciality}', 'admin\SpecialityController@update')->name('speciality.update');
 
+Route::get('/admin/ambulatory', 'admin\AmbulatoryController@index')->name('ambulatory');
+Route::delete('/admin/ambulatory/{ambulatory}', 'admin\AmbulatoryController@destroy')->name('ambulatory.delete');
+Route::post('/admin/ambulatory', 'admin\AmbulatoryController@store')->name('ambulatory.store');
+Route::get('/admin/ambulatory/create', 'admin\AmbulatoryController@create')->name('ambulatory.create');
 
-Route::get('/test', function(){
-   $availability = new \App\Availability();
-$provider = \App\Models\User::where('id', 9)->first()->toArray();
-$provider['services'] = [1];
-$provider['settings'] = \App\Models\UserSettings::where('user_id', 9)->first()->toArray();
-unset($provider['settings']['user_id']);
-$service = \App\Models\MedicalSpeciality::where('id',8)->first()->toArray();
-$selected_date="2021-03-30";
-dd($availability->get_available_hours($selected_date, $service, $provider));
-});
+
+Route::post('/api/getFirstAppointment', 'PublicController@get_first_appointment');
+Route::post('/api/getUnavailDates', 'PublicController@ajax_get_unavailable_dates');
+Route::post('/api/getAvailHours', 'PublicController@get_available_hours_ajax');
+Route::post('/api/getMedics', 'PublicController@check_speciality_ajax');
 
 Route::get('/admin/users', 'admin\UserController@index')->name('users.index');
 Route::get('/admin/user/{user}/edit', 'admin\UserController@edit')->name('user.edit');

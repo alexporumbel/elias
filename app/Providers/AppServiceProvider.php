@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Availability;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(Availability::class, function ($app) {
+            return new Availability();
+        });
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App;
 
 
 use App\Models\Ambulatory;
+use phpDocumentor\Reflection\Types\Null_;
 
 class Availability
 {
@@ -60,12 +61,15 @@ class Availability
         $working_day = strtolower(date('l', strtotime($date)));
 
         $date_working_plan = $working_plan[$working_day] ?? NULL;
+if($working_plan[$working_day] == NULL){
+    $periods = [];
+}else{
 
-        $periods = [];
         $periods[] = [
             'start' => $date_working_plan['start'],
             'end' => $date_working_plan['end']
         ];
+}
 
         if (isset($date_working_plan['breaks']))
         {

@@ -1,9 +1,5 @@
 @extends('admin.parts.layout')
 @section('head')
-
-    <link rel="stylesheet" href="/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-    <link rel="stylesheet" href="/assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <link rel="stylesheet" href="/assets/plugins/timepicker/css/timepicker.css">
     <style>
@@ -14,12 +10,6 @@
 @endsection
 
 @section('footer')
-    <script src="/assets/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
     <script src="/assets/plugins/timepicker/js/timepicker.js"></script>
     <script src="/assets/plugins/workingplan.js"></script>
 
