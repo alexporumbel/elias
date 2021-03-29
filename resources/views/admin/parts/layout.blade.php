@@ -57,7 +57,7 @@
                 </div>
                 <div class="info">
                     @auth()
-                    <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                    <a href="#" class="d-block">{{ Auth::user()->name .' '. Auth::user()->lname }}</a>
                     @endauth
                 </div>
             </div>
@@ -105,7 +105,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="pages/widgets.html" class="nav-link">
+                        <a href="{{ route('users.index') }}" class="nav-link {{ Request::path() == 'admin/users' ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>
                                 Staff
@@ -113,7 +113,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="pages/widgets.html" class="nav-link">
+                        <a href="#" class="nav-link {{ Request::path() == 'admin/settings' ? 'active' : '' }}">
                             <i class="nav-icon fas fa-cogs"></i>
                             <p>
                                 Setari
