@@ -19,10 +19,9 @@ class CreateRecoveriesTable extends Migration
             $table->dateTime('end_datetime');
             $table->string('name');
             $table->string('lname');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('phone');
             $table->string('appointment_type');
-            $table->unsignedBigInteger('series_id');
             $table->timestamps();
         });
     }

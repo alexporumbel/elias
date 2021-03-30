@@ -16,13 +16,14 @@ class CreateHospitalizationsTable extends Migration
         Schema::create('hospitalizations', function (Blueprint $table) {
             $table->id();
             $table->dateTime('start_datetime');
-            $table->dateTime('end_datetime');
             $table->string('name');
             $table->string('lname');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('phone');
+            $table->string('user_provider_id');
             $table->string('appointment_type');
             $table->string('hospitalization_type');
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }

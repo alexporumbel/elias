@@ -37,10 +37,10 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Programari Ambulator</h1>
+                        <h1 class="m-0">Programari Spitalizare</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6 ">
-                        <span class="breadcrumb float-sm-right"><a class="btn btn-block btn-primary" href="{{ route('ambulatory.create') }}">Adauga Programare</a></span>
+                        <span class="breadcrumb float-sm-right"><a class="btn btn-block btn-primary" href="{{ route('hospitalization.create') }}">Adauga Programare</a></span>
 
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -63,26 +63,26 @@
                                     <tr>
                                         <th>Pacient</th>
                                         <th>Medic</th>
-                                        <th>Specialitate</th>
                                         <th>Telefon</th>
                                         <th>Tip prezentare</th>
+                                        <th>Tip spitalizare</th>
                                         <th>Observatii</th>
                                         <th>Data Programarii</th>
                                         <th>Modifica</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($ambulatories as $ambulatory)
+                                    @foreach($hospitalizations as $hospitalization)
                                         <tr>
-                                            <td>{{ $ambulatory->name . ' '. $ambulatory->lname }}</td>
-                                            <td>{{ $ambulatory->medic->name .' '.$ambulatory->medic->lname }}</td>
-                                            <td>{{ $ambulatory->medic->settings->speciality->name }}</td>
-                                            <td>{{ $ambulatory->phone }}</td>
-                                            <td>{{ $types[$ambulatory->appointment_type] }}</td>
-                                            <td>{{ $ambulatory->notes }}</td>
-                                            <td>{{ $ambulatory->start_datetime }}</td>
+                                            <td>{{ $hospitalization->name . ' '. $hospitalization->lname }}</td>
+                                            <td>{{ $hospitalization->medic->name .' '.$hospitalization->medic->lname }}</td>
+                                            <td>{{ $hospitalization->phone }}</td>
+                                            <td>{{ $types[$hospitalization->appointment_type] }}</td>
+                                            <td>{{ $hospitalizationTypes[$hospitalization->hospitalization_type] }}</td>
+                                            <td>{{ $hospitalization->notes }}</td>
+                                            <td>{{ $hospitalization->start_datetime }}</td>
                                             <td><div class="mng-icons">
-                                                    <form style="display: inline-block;" action="{{ route('ambulatory.delete', $ambulatory) }}" method="post">
+                                                    <form style="display: inline-block;" action="{{ route('hospitalization.delete', $hospitalization) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button class="btn btn-default" type="submit"><i class="far fa-trash-alt"></i></button>
@@ -95,9 +95,9 @@
                                     <tr>
                                         <th>Pacient</th>
                                         <th>Medic</th>
-                                        <th>Specialitate</th>
                                         <th>Telefon</th>
                                         <th>Tip prezentare</th>
+                                        <th>Tip spitalizare</th>
                                         <th>Observatii</th>
                                         <th>Data Programarii</th>
                                         <th>Modifica</th>

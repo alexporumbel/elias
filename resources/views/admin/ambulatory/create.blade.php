@@ -103,7 +103,7 @@
                             });
                             $.post("/api/getUnavailDates", {'service_id': serviceId, 'medic_id': 'any', 'date': today})
                                 .done(function (unavailDates) {
-                                    showCalendar(today, maxdate, null, unavailDates);
+                                    showCalendar(today, maxdate, unavailDates);
 
                                     $.post("/api/getFirstAppointment", {'service_id': serviceId, 'medic_id': 'any'})
                                         .done(function (appointmentData) {
@@ -158,7 +158,7 @@
                             }, 1000);
                             $('.slot-list').html('');
                             $('#selectedDate').val('');
-                            showCalendar(today, today, null, [today]);
+                            showCalendar(today, today, [today]);
                         }
                         $('.medic').html(medics);
                     });
@@ -178,7 +178,7 @@
                 });
                 $.post("/api/getUnavailDates", {'service_id': serviceId, 'medic_id': medicId, 'date': today})
                     .done(function (unavailDates) {
-                        showCalendar(today, maxdate, null, unavailDates);
+                        showCalendar(today, maxdate, unavailDates);
 
                         $.post("/api/getFirstAppointment", {'service_id': serviceId, 'medic_id': medicId})
                             .done(function (appointmentData) {
@@ -225,7 +225,7 @@
 
         });
 
-        function showCalendar(min, max, selected, disabledDates, initDate = null) {
+        function showCalendar(min, max, disabledDates, initDate = null) {
             if(initDate == null){
                 initDate = moment();
             }
@@ -336,7 +336,7 @@
                                 "date": moment(info.year+'-'+info.month+'-01').format('YYYY-MM-DD')
                             })
                                 .done(function (unavailDates) {
-                                    showCalendar(today, maxdate, null, unavailDates, moment(info.year+'-'+info.month+'-01'));
+                                    showCalendar(today, maxdate, unavailDates, moment(info.year+'-'+info.month+'-01'));
                                 });
                         }
                         }else if(info.type === 'prev') {
@@ -347,19 +347,17 @@
                                     "date": moment(info.year+'-'+info.month+'-01').format('YYYY-MM-DD')
                                 })
                                     .done(function (unavailDates) {
-                                        showCalendar(today, maxdate, null, unavailDates, moment(info.year+'-'+info.month+'-01'));
+                                        showCalendar(today, maxdate, unavailDates, moment(info.year+'-'+info.month+'-01'));
                                     });
                             }
                         }
                     }
                 }
             });
-            if (selected != null) {
-            }
         }
 
 
-        showCalendar(today, today, null, [today]);
+        showCalendar(today, today, [today]);
 
 
     </script>

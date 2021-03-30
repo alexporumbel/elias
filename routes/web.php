@@ -33,6 +33,11 @@ Route::delete('/admin/ambulatory/{ambulatory}', 'admin\AmbulatoryController@dest
 Route::post('/admin/ambulatory', 'admin\AmbulatoryController@store')->name('ambulatory.store');
 Route::get('/admin/ambulatory/create', 'admin\AmbulatoryController@create')->name('ambulatory.create');
 
+Route::get('/admin/hospitalization', 'admin\HospitalizationController@index')->name('hospitalization');
+Route::delete('/admin/hospitalization/{hospitalization}', 'admin\HospitalizationController@destroy')->name('hospitalization.delete');
+Route::post('/admin/hospitalization', 'admin\HospitalizationController@store')->name('hospitalization.store');
+Route::get('/admin/hospitalization/create', 'admin\HospitalizationController@create')->name('hospitalization.create');
+
 
 Route::post('/api/getFirstAppointment', 'PublicController@get_first_appointment');
 Route::post('/api/getUnavailDates', 'PublicController@ajax_get_unavailable_dates');
