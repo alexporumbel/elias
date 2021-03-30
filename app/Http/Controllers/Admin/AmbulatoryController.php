@@ -22,7 +22,11 @@ class AmbulatoryController extends Controller
     public function index()
     {
         $ambulatories = Ambulatory::all();
-        return view('admin.ambulatory.index', ['ambulatories'=> $ambulatories]);
+        $types = ['trimitere' => 'Cu bilet de trimitere',
+            'control' => 'Consultatie de control',
+            'cronic' => 'Afectiune cronica',
+            'plata' => 'Cu plata'];
+        return view('admin.ambulatory.index', ['ambulatories'=> $ambulatories, 'types' => $types]);
     }
 
     /**
@@ -44,9 +48,36 @@ class AmbulatoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $validatedData = request()->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'lname' => ['required', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'email', 'max:255'],
+            'phone' => ['required', 'string', 'min:10'],
+            'speciality' => ['required', 'integer'],
+            'medic' => ['required', 'integer'],
+            'selectedDate' => ['required', 'string'],
+            'appointmentType' => ['required', 'string'],
+            'notes' => ['nullable', 'string'],
+        ]);
+        $start_datetime = new \DateTime(request('selectedDate'));
+        $end_datetime= new \DateTime(request('selectedDate'));
+        $end_datetime->modify('+20 minutes');
+
+        $user = Ambulatory::create([
+            'name' => request('name'),
+            'lname' => request('lname'),
+            'email' => request('email'),
+            'phone' => request('phone'),
+            'speciality_id' => request('speciality'),
+            'user_provider_id' => request('medic'),
+            'appointment_type' => request('appointmentType'),
+            'notes' => request('notes'),
+            'start_datetime'=> $start_datetime,
+            'end_datetime'=> $end_datetime,
+        ]);
+        return redirect(route('ambulatory'));
     }
 
 

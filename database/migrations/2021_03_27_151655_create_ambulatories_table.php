@@ -19,10 +19,10 @@ class CreateAmbulatoriesTable extends Migration
             $table->dateTime('end_datetime');
             $table->string('name');
             $table->string('lname');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('phone');
             $table->string('appointment_type');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->unsignedBigInteger('user_provider_id');
             $table->unsignedBigInteger('speciality_id');
             $table->timestamps();

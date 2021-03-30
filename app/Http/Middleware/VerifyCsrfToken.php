@@ -12,9 +12,9 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        '/getUnavailDates',
-        '/getFirstAppointment',
-        '/getAvailHours',
-        '/getMedics',
+        '/api/getUnavailDates',
+        '/api/getFirstAppointment',
+        '/api/getAvailHours',
+        '/api/getMedics',
     ];
 }

@@ -57,6 +57,10 @@ class UserController extends Controller
             'lname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
+            'user_id' => ['nullable', 'integer'],
+            'speciality_id' => ['nullable', 'integer'],
+            'working_plan' => ['nullable', 'json'],
+            'is_admin' => ['nullable', 'integer'],
         ]);
 
         $user = User::create([

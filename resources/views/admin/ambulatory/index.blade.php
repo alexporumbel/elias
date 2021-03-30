@@ -64,6 +64,7 @@
                                         <th>Medic</th>
                                         <th>Specialitate</th>
                                         <th>Telefon</th>
+                                        <th>Tip prezentare</th>
                                         <th>Observatii</th>
                                         <th>Data Programarii</th>
                                         <th>Modifica</th>
@@ -76,6 +77,7 @@
                                             <td>{{ $ambulatory->medic->name .' '.$ambulatory->medic->lname }}</td>
                                             <td>{{ optional($ambulatory->medic->settings->speciality)->name }}</td>
                                             <td>{{ $ambulatory->phone }}</td>
+                                            <td>{{ $types[$ambulatory->appointment_type] }}</td>
                                             <td>{{ $ambulatory->notes }}</td>
                                             <td>{{ $ambulatory->start_datetime }}</td>
                                             <td><div class="mng-icons">
@@ -94,6 +96,7 @@
                                         <th>Medic</th>
                                         <th>Specialitate</th>
                                         <th>Telefon</th>
+                                        <th>Tip prezentare</th>
                                         <th>Observatii</th>
                                         <th>Data Programarii</th>
                                         <th>Modifica</th>
