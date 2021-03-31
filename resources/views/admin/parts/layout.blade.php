@@ -106,6 +106,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ route('recoveryseries.index') }}" class="nav-link {{ Request::path() == 'admin/recoveryseries' ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-notes-medical"></i>
+                            <p>
+                                Serii recuperare
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('users.index') }}" class="nav-link {{ Request::path() == 'admin/users' ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
                             <p>

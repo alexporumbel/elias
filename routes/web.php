@@ -38,6 +38,18 @@ Route::delete('/admin/hospitalization/{hospitalization}', 'admin\Hospitalization
 Route::post('/admin/hospitalization', 'admin\HospitalizationController@store')->name('hospitalization.store');
 Route::get('/admin/hospitalization/create', 'admin\HospitalizationController@create')->name('hospitalization.create');
 
+Route::get('/admin/recovery', 'admin\RecoveryController@index')->name('recovery');
+Route::delete('/admin/recovery/{recovery}', 'admin\RecoveryController@destroy')->name('recovery.delete');
+Route::post('/admin/recovery', 'admin\RecoveryController@store')->name('recovery.store');
+Route::get('/admin/recovery/create', 'admin\RecoveryController@create')->name('recovery.create');
+
+Route::get('/admin/recoveryseries', 'admin\RecoverySeriesController@index')->name('recoveryseries.index');
+Route::get('/admin/recoveryseries/{recoveryseries}/edit', 'admin\RecoverySeriesController@edit')->name('recoveryseries.edit');
+Route::delete('/admin/recoveryseries/{recoveryseries}', 'admin\RecoverySeriesController@destroy')->name('recoveryseries.delete');
+Route::post('/admin/recoveryseries', 'admin\RecoverySeriesController@store')->name('recoveryseries.store');
+Route::get('/admin/recoveryseries/create', 'admin\RecoverySeriesController@create')->name('recoveryseries.create');
+Route::put('/admin/recoveryseries/{recoveryseries}', 'admin\RecoverySeriesController@update')->name('recoveryseries.update');
+
 
 Route::post('/api/getFirstAppointment', 'PublicController@get_first_appointment');
 Route::post('/api/getUnavailDates', 'PublicController@ajax_get_unavailable_dates');

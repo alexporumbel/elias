@@ -15,8 +15,8 @@ class CreateRecoveriesTable extends Migration
     {
         Schema::create('recoveries', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('start_datetime');
-            $table->dateTime('end_datetime');
+            $table->string('start_date');
+            $table->string('end_date');
             $table->string('name');
             $table->string('lname');
             $table->string('email')->nullable();

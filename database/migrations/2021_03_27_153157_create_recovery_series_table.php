@@ -17,8 +17,8 @@ class CreateRecoverySeriesTable extends Migration
             $table->id();
             $table->string('series');
             $table->string('capacity');
-            $table->dateTime('start_datetime');
-            $table->dateTime('end_datetime');
+            $table->string('start_date');
+            $table->string('end_date');
             $table->timestamps();
         });
     }

@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class RecoverySeries extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'series',
+        'start_date',
+        'end_date',
+        'capacity',
+    ];
 }
