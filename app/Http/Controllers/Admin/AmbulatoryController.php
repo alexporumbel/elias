@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MailController;
 use App\Models\Ambulatory;
 use App\Models\MedicalSpeciality;
 use Illuminate\Http\Request;
@@ -48,7 +49,7 @@ class AmbulatoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(MailController $mailController)
     {
         $validatedData = request()->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -77,6 +78,9 @@ class AmbulatoryController extends Controller
             'start_datetime'=> $start_datetime,
             'end_datetime'=> $end_datetime,
         ]);
+
+        $mailController->sendMail($start_datetime, request('name'), request('lname'), request('medic'), 'ambulatory');
+
         return redirect(route('ambulatory'));
     }
 

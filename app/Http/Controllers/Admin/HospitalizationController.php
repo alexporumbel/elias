@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\MailController;
 use App\Models\Hospitalization;
 use App\Models\MedicalSpeciality;
 use App\Models\UserSettings;
@@ -52,7 +53,7 @@ class HospitalizationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(MailController $mailController)
     {
         $validatedData = request()->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -77,6 +78,8 @@ class HospitalizationController extends Controller
             'hospitalization_type' => request('hospitalizationType'),
             'notes' => request('notes'),
         ]);
+
+        $mailController->sendMail(new \DateTime(request('selectedDate') + ' 8:00', request('name'), request('lname'), request('medic'), 'hospitalization');
         return redirect(route('hospitalization'));
     }
 

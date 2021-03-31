@@ -9,6 +9,7 @@ use App\Models\Recovery;
 use App\Models\RecoverySeries;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 
 class PublicController extends Controller
@@ -28,7 +29,7 @@ class PublicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeAmbulatory()
+    public function storeAmbulatory(MailController $mailController)
     {
         $validatedData = request()->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -59,7 +60,8 @@ class PublicController extends Controller
         ]);
         $medic = User::where('id', request('medic'))->first();
         $speciality = MedicalSpeciality::where('id', request('speciality'))->first();
-        return redirect()->route('homepage')->with('success',"Esti programat pe  ". request('selectedDate') ." la ". $speciality->name .", Dr. ". $medic->name ." ". $medic->lname);
+        $mailController->sendMail($start_datetime, request('name'), request('lname'), request('medic'), 'ambulatory');
+        return redirect()->route('homepage')->with('success',"Esti programat pe  ". $date ." ora ". $hour ." la ". $speciality->name .", Dr. ". $medic->name ." ". $medic->lname);
     }
 
     public function createRecovery()
