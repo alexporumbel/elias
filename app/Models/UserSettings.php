@@ -25,5 +25,14 @@ class UserSettings extends Model
         return $this->belongsTo(MedicalSpeciality::class, 'speciality_id');
     }
 
+    public function is_admin()
+    {
+        if($this->where('is_admin', 1)->first()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }

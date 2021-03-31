@@ -20,12 +20,12 @@ Route::post('/recuperare', 'PublicController@storeRecovery')->name('publicRecove
 
 Route::redirect('/admin', '/admin/ambulatory', 301);
 
-Route::get('/admin/specialities', 'admin\SpecialityController@index')->name('specialities.index');
-Route::get('/admin/speciality/{speciality}/edit', 'admin\SpecialityController@edit')->name('speciality.edit');
-Route::delete('/admin/speciality/{speciality}', 'admin\SpecialityController@destroy')->name('speciality.delete');
-Route::post('/admin/speciality', 'admin\SpecialityController@store')->name('speciality.store');
-Route::get('/admin/speciality/create', 'admin\SpecialityController@create')->name('speciality.create');
-Route::put('/admin/speciality/{speciality}', 'admin\SpecialityController@update')->name('speciality.update');
+Route::get('/admin/specialities', 'admin\SpecialityController@index')->name('specialities.index')->middleware('can:admin');
+Route::get('/admin/speciality/{speciality}/edit', 'admin\SpecialityController@edit')->name('speciality.edit')->middleware('can:admin');
+Route::delete('/admin/speciality/{speciality}', 'admin\SpecialityController@destroy')->name('speciality.delete')->middleware('can:admin');
+Route::post('/admin/speciality', 'admin\SpecialityController@store')->name('speciality.store')->middleware('can:admin');
+Route::get('/admin/speciality/create', 'admin\SpecialityController@create')->name('speciality.create')->middleware('can:admin');
+Route::put('/admin/speciality/{speciality}', 'admin\SpecialityController@update')->name('speciality.update')->middleware('can:admin');
 
 Route::get('/admin/ambulatory', 'admin\AmbulatoryController@index')->name('ambulatory');
 Route::delete('/admin/ambulatory/{ambulatory}', 'admin\AmbulatoryController@destroy')->name('ambulatory.delete');
@@ -42,12 +42,12 @@ Route::delete('/admin/recovery/{recovery}', 'admin\RecoveryController@destroy')-
 Route::post('/admin/recovery', 'admin\RecoveryController@store')->name('recovery.store');
 Route::get('/admin/recovery/create', 'admin\RecoveryController@create')->name('recovery.create');
 
-Route::get('/admin/recoveryseries', 'admin\RecoverySeriesController@index')->name('recoveryseries.index');
-Route::get('/admin/recoveryseries/{recoveryseries}/edit', 'admin\RecoverySeriesController@edit')->name('recoveryseries.edit');
-Route::delete('/admin/recoveryseries/{recoveryseries}', 'admin\RecoverySeriesController@destroy')->name('recoveryseries.delete');
-Route::post('/admin/recoveryseries', 'admin\RecoverySeriesController@store')->name('recoveryseries.store');
-Route::get('/admin/recoveryseries/create', 'admin\RecoverySeriesController@create')->name('recoveryseries.create');
-Route::put('/admin/recoveryseries/{recoveryseries}', 'admin\RecoverySeriesController@update')->name('recoveryseries.update');
+Route::get('/admin/recoveryseries', 'admin\RecoverySeriesController@index')->name('recoveryseries.index')->middleware('can:admin');
+Route::get('/admin/recoveryseries/{recoveryseries}/edit', 'admin\RecoverySeriesController@edit')->name('recoveryseries.edit')->middleware('can:admin');
+Route::delete('/admin/recoveryseries/{recoveryseries}', 'admin\RecoverySeriesController@destroy')->name('recoveryseries.delete')->middleware('can:admin');
+Route::post('/admin/recoveryseries', 'admin\RecoverySeriesController@store')->name('recoveryseries.store')->middleware('can:admin');
+Route::get('/admin/recoveryseries/create', 'admin\RecoverySeriesController@create')->name('recoveryseries.create')->middleware('can:admin');
+Route::put('/admin/recoveryseries/{recoveryseries}', 'admin\RecoverySeriesController@update')->name('recoveryseries.update')->middleware('can:admin');
 
 
 Route::post('/api/getFirstAppointment', 'ApiController@get_first_appointment');
@@ -55,12 +55,15 @@ Route::post('/api/getUnavailDates', 'ApiController@ajax_get_unavailable_dates');
 Route::post('/api/getAvailHours', 'ApiController@get_available_hours_ajax');
 Route::post('/api/getMedics', 'ApiController@check_speciality_ajax');
 
-Route::get('/admin/users', 'admin\UserController@index')->name('users.index');
-Route::get('/admin/user/{user}/edit', 'admin\UserController@edit')->name('user.edit');
-Route::delete('/admin/user/{user}', 'admin\UserController@destroy')->name('user.delete');
-Route::post('/admin/user', 'admin\UserController@store')->name('user.store');
-Route::get('/admin/user/create', 'admin\UserController@create')->name('user.create');
-Route::put('/admin/user/{user}', 'admin\UserController@update')->name('user.update');
+Route::get('/admin/users', 'admin\UserController@index')->name('users.index')->middleware('can:admin');
+Route::get('/admin/user/{user}/edit', 'admin\UserController@edit')->name('user.edit')->middleware('can:admin');
+Route::delete('/admin/user/{user}', 'admin\UserController@destroy')->name('user.delete')->middleware('can:admin');
+Route::post('/admin/user', 'admin\UserController@store')->name('user.store')->middleware('can:admin');
+Route::get('/admin/user/create', 'admin\UserController@create')->name('user.create')->middleware('can:admin');
+Route::put('/admin/user/{user}', 'admin\UserController@update')->name('user.update')->middleware('can:admin');
+
+Route::get('/admin/settings', 'admin\SettingsController@edit')->name('settings')->middleware('can:admin');
+Route::put('/admin/settings', 'admin\SettingsController@update')->name('settings.update')->middleware('can:admin');
 
 Route::get('/admin/login', 'admin\LoginController@showLoginForm')->name('admin.login');
 Route::post('/admin/login', 'admin\LoginController@login')->name('admin.login');

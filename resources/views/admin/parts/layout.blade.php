@@ -97,6 +97,7 @@
                             </li>
                         </ul>
                     </li>
+                    @can('admin')
                     <li class="nav-item">
                         <a href="{{ route('specialities.index') }}" class="nav-link {{ Request::path() == 'admin/specialities' ? 'active' : '' }}">
                             <i class="nav-icon fas fa-user-md"></i>
@@ -122,13 +123,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link {{ Request::path() == 'admin/settings' ? 'active' : '' }}">
+                        <a href="{{ route('settings') }}" class="nav-link {{ Request::path() == 'admin/settings' ? 'active' : '' }}">
                             <i class="nav-icon fas fa-cogs"></i>
                             <p>
                                 Setari
                             </p>
                         </a>
                     </li>
+                    @endcan
 
                 </ul>
             </nav>
