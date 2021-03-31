@@ -2,141 +2,101 @@
 
 namespace App\Http\Controllers;
 
-use App\Availability;
+use App\Http\Controllers\Controller;
+use App\Models\Ambulatory;
 use App\Models\MedicalSpeciality;
+use App\Models\Recovery;
+use App\Models\RecoverySeries;
 use App\Models\User;
-use App\Models\UserSettings;
 use Illuminate\Http\Request;
+
 
 class PublicController extends Controller
 {
 
-    public function get_available_hours_ajax(Availability $availability)
+    public function createAmbulatory()
     {
-        return $this->get_available_hours(request('medic_id'), request('service_id'), request('date'), $availability);
+        $specialities = MedicalSpeciality::all();
+        return view('welcome', [
+            'specialities' => $specialities,
+        ]);
     }
 
-    public function get_available_hours($medic_id, $service_id, $date, Availability $availability)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeAmbulatory()
     {
-        $provider = User::where('id', $medic_id)->first()->toArray();
-        $provider['services'] = [$service_id];
-        $provider['settings'] = UserSettings::where('user_id', $medic_id)->first()->toArray();
-        unset($provider['settings']['user_id']);
-        $service = MedicalSpeciality::where('id', $service_id)->first()->toArray();
-        return $availability->get_available_hours($date, $service, $provider);
+        $validatedData = request()->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'lname' => ['required', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'email', 'max:255'],
+            'phone' => ['required', 'string', 'min:10'],
+            'speciality' => ['required', 'integer'],
+            'medic' => ['required', 'integer'],
+            'selectedDate' => ['required', 'string'],
+            'appointmentType' => ['required', 'string'],
+            'notes' => ['nullable', 'string'],
+        ]);
+        $start_datetime = new \DateTime(request('selectedDate'));
+        $end_datetime= new \DateTime(request('selectedDate'));
+        $end_datetime->modify('+20 minutes');
+
+        $user = Ambulatory::create([
+            'name' => request('name'),
+            'lname' => request('lname'),
+            'email' => request('email'),
+            'phone' => request('phone'),
+            'speciality_id' => request('speciality'),
+            'user_provider_id' => request('medic'),
+            'appointment_type' => request('appointmentType'),
+            'notes' => request('notes'),
+            'start_datetime'=> $start_datetime,
+            'end_datetime'=> $end_datetime,
+        ]);
+        $medic = User::where('id', request('medic'))->first();
+        $speciality = MedicalSpeciality::where('id', request('speciality'))->first();
+        return redirect()->route('homepage')->with('success',"Esti programat pe  ". request('selectedDate') ." la ". $speciality->name .", Dr. ". $medic->name ." ". $medic->lname);
     }
 
-    public function get_first_appointment(Availability $availability)
+    public function createRecovery()
     {
-        $date = $this->get_first_available_date(request('medic_id'), request('service_id'), $availability);
-        if(request('medic_id') === 'any') {
-            $medics = UserSettings::where('speciality_id', request('service_id'))->get();
-        }else{
-            $medics = UserSettings::where('user_id', request('medic_id'))->get();
-        }
-
-        $data = [];
-        foreach ($medics as $medic) {
-            $schedule = $this->get_available_hours($medic->user_id, request('service_id'), $date, $availability);
-            if (!empty($schedule)) {
-                $data['medic'] = $medic->user->name . ' ' . $medic->user->lname;
-                $data['medicId'] = $medic->user->id;
-                $data['schedule'] = $schedule[0];
-                $data['date'] = $date;
-                break;
-            }
-        }
-
-        return $data;
+        $series = RecoverySeries::all();
+        return view('publicRecovery', [
+            'series' => $series,
+        ]);
     }
 
-    protected function search_providers_by_service($service_id)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeRecovery()
     {
-        $available_providers = UserSettings::where('speciality_id', $service_id)->get()->toArray();
-        $provider_list = [];
+        $validatedData = request()->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'lname' => ['required', 'string', 'max:255'],
+            'email' => ['nullable', 'string', 'email', 'max:255'],
+            'phone' => ['required', 'string', 'min:10'],
+            'appointmentType' => ['required', 'string'],
+            'series' => ['required', 'integer'],
+        ]);
 
-        foreach ($available_providers as $provider) {
-
-            // Check if the provider is affected to the selected service.
-            $provider_list[] = $provider['user_id'];
-        }
-
-        return $provider_list;
-    }
-
-    public function ajax_get_unavailable_dates(Availability $availability)
-    {
-        $provider_id = request('medic_id');
-        $service_id = request('service_id');
-        $selected_date_string = request('date');
-        $selected_date = new \DateTime($selected_date_string);
-        $number_of_days_in_month = (int)$selected_date->format('t');
-        $unavailable_dates = [];
-
-        $provider_ids = $provider_id === 'any'
-            ? $this->search_providers_by_service($service_id)
-            : [$provider_id];
-
-
-        for ($i = 1; $i <= $number_of_days_in_month; $i++) {
-            $current_date = new \DateTime($selected_date->format('Y-m') . '-' . $i);
-
-            if ($current_date < new \DateTime(date('Y-m-d 00:00:00'))) {
-                // Past dates become immediately unavailable.
-                $unavailable_dates[] = $current_date->format('Y-m-d');
-                continue;
-            }
-
-            // Finding at least one slot of availability.
-            foreach ($provider_ids as $current_provider_id) {
-
-                $available_hours = $this->get_available_hours($current_provider_id, $service_id, $current_date->format('Y-m-d'), $availability);
-
-
-                if (!empty($available_hours)) {
-                    break;
-                }
-            }
-
-            // No availability amongst all the provider.
-            if (empty($available_hours)) {
-                $unavailable_dates[] = $current_date->format('Y-m-d');
-            }
-        }
-
-        return $unavailable_dates;
-    }
-
-    public function get_first_available_date($provider_id, $service_id, Availability $availability)
-    {
-        $provider_ids = $provider_id === 'any'
-            ? $this->search_providers_by_service($service_id)
-            : [$provider_id];
-
-        $current_date = new \DateTime();
-        while(true){
-            foreach ($provider_ids as $current_provider_id) {
-                $available_hours = $this->get_available_hours($current_provider_id, $service_id, $current_date->format('Y-m-d'), $availability);
-                if (!empty($available_hours)) {
-                    return $current_date->format('Y-m-d');
-                }
-            }
-            $current_date = $current_date->add(new \DateInterval('P1D'));
-            }
-    }
-
-    public function check_speciality_ajax()
-    {
-        $medics = UserSettings::where('speciality_id', request('service_id'))->get();
-        $data['is_paid'] = MedicalSpeciality::where('id', request('service_id'))->first()->is_paid;
-        $i = 0;
-        foreach ($medics as $medic) {
-            $data['medics'][$i]['id'] = $medic->user->id;
-            $data['medics'][$i]['name'] = $medic->user->name . ' ' . $medic->user->lname;
-            $i++;
-        }
-        return $data;
-
+        $user = Recovery::create([
+            'name' => request('name'),
+            'lname' => request('lname'),
+            'email' => request('email'),
+            'phone' => request('phone'),
+            'start_date' => RecoverySeries::where('id', request('series'))->first()->start_date,
+            'end_date' => RecoverySeries::where('id', request('series'))->first()->end_date,
+            'appointment_type' => request('appointmentType'),
+        ]);
+        return redirect()->route('publicRecovery')->with('success','Locul tau a fost rezervat!');
     }
 
 }

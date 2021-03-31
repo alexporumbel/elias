@@ -13,13 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PublicController@createAmbulatory')->name('homepage');
+Route::post('/', 'PublicController@storeAmbulatory')->name('publicAmbulatory.store');
+Route::get('/recuperare', 'PublicController@createRecovery')->name('publicRecovery');
+Route::post('/recuperare', 'PublicController@storeRecovery')->name('publicRecovery.store');
 
 Route::redirect('/admin', '/admin/ambulatory', 301);
-Route::get('/admin/hospitalization', 'admin\AmbulatoryController@index')->name('hospitalization');
-Route::get('/admin/recovery', 'admin\AmbulatoryController@index')->name('recovery');
 
 Route::get('/admin/specialities', 'admin\SpecialityController@index')->name('specialities.index');
 Route::get('/admin/speciality/{speciality}/edit', 'admin\SpecialityController@edit')->name('speciality.edit');
@@ -51,10 +50,10 @@ Route::get('/admin/recoveryseries/create', 'admin\RecoverySeriesController@creat
 Route::put('/admin/recoveryseries/{recoveryseries}', 'admin\RecoverySeriesController@update')->name('recoveryseries.update');
 
 
-Route::post('/api/getFirstAppointment', 'PublicController@get_first_appointment');
-Route::post('/api/getUnavailDates', 'PublicController@ajax_get_unavailable_dates');
-Route::post('/api/getAvailHours', 'PublicController@get_available_hours_ajax');
-Route::post('/api/getMedics', 'PublicController@check_speciality_ajax');
+Route::post('/api/getFirstAppointment', 'ApiController@get_first_appointment');
+Route::post('/api/getUnavailDates', 'ApiController@ajax_get_unavailable_dates');
+Route::post('/api/getAvailHours', 'ApiController@get_available_hours_ajax');
+Route::post('/api/getMedics', 'ApiController@check_speciality_ajax');
 
 Route::get('/admin/users', 'admin\UserController@index')->name('users.index');
 Route::get('/admin/user/{user}/edit', 'admin\UserController@edit')->name('user.edit');

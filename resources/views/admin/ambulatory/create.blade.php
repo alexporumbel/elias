@@ -123,6 +123,7 @@
                                                 if (result.isConfirmed) {
                                                     var availdiv = '';
                                                     $('.medic option[value="' + appointmentData['medicId'] + '"]').prop('selected', true);
+                                                    medicId = appointmentData['medicId'];
                                                     $.post("/api/getAvailHours", {
                                                         'service_id': serviceId,
                                                         'medic_id': appointmentData['medicId'],
