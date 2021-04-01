@@ -28,7 +28,7 @@ class SettingsController extends Controller
         $validatedData = request()->validate([
             'site_name' => ['required', 'string', 'max:255'],
             'mail_server' => ['required', 'string', 'max:255'],
-            'mail_port' => ['required', 'integer', 'max:255'],
+            'mail_port' => ['required', 'integer'],
             'mail_password' => ['nullable', 'string'],
             'ambulatory_duration' => ['required', 'integer'],
             'mail_name' => ['required', 'string', 'max:255'],

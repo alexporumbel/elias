@@ -539,10 +539,16 @@
                                                 var availdiv = '';
                                                 $('.medic option[value="' + appointmentData['medicId'] + '"]').prop('selected', true);
                                                 medicId = appointmentData['medicId'];
+                                                selectedDate = appointmentData['date'];
+
+                                                $.post("/api/getUnavailDates", {'service_id': serviceId, 'medic_id': medicId, 'date': selectedDate})
+                                                    .done(function (unavailDates) {
+                                                        showCalendar(today, maxdate, unavailDates);
+                                                    });
                                                 $.post("/api/getAvailHours", {
                                                     'service_id': serviceId,
-                                                    'medic_id': appointmentData['medicId'],
-                                                    "date": appointmentData['date']
+                                                    'medic_id': medicId,
+                                                    "date": selectedDate
                                                 }).done(function (availHours) {
                                                     $.each(availHours, function (key, value) {
                                                         availdiv += '<div class="slot">\
@@ -551,10 +557,12 @@
                                                 </button>\
                                                 </div>';
                                                     });
-                                                    $('.slot-list').html(availdiv);
-                                                    $('.calendar').pignoseCalendar('set', appointmentData['date']);
-                                                    selectedDate = appointmentData['date'];
-                                                    selectTime(appointmentData['schedule']);
+                                                    setTimeout(function(){
+                                                        $('.slot-list').html(availdiv);
+                                                        $('.calendar').pignoseCalendar('set', selectedDate);
+                                                        selectTime(appointmentData['schedule']);
+                                                    }, 1000);
+
                                                 });
                                             }
                                         })

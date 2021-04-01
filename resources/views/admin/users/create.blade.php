@@ -191,12 +191,15 @@
                                     </div>
                                     <div class="form-group speciality">
                                         <label>Specialitate</label>
-                                        <select name="speciality" class="custom-select">
-                                            <option value="null">Fara specialitate</option>
+                                        <select name="speciality" class="custom-select speciality form-control @error('speciality') is-invalid @enderror">
+                                            <option>Fara specialitate</option>
                                             @foreach($specialities as $speciality)
                                                 <option value="{{ $speciality->id }}">{{ $speciality->name }}</option>
                                             @endforeach
                                         </select>
+                                        @error('speciality')
+                                        <p class="error invalid-feedback">{{ $errors->first('speciality') }}</p>
+                                        @enderror
                                     </div>
 
                                     <div class="form-group schedule">

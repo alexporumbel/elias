@@ -16,7 +16,7 @@ class MailController extends Controller
         $date = $dateTime->format('d.m.Y');
         $hour = $dateTime->format('H:i');
         $medic = User::where('id', $medic)->first();
-        $type === 'ambulatory' ? 'in ambulatoriu':'pentru spitalizare';
+        $type = $type === 'ambulatory' ? 'in ambulatoriu':'pentru spitalizare';
         Mail::raw("Ai o programare noua $type pe $date la ora $hour pacient $name $lname", function ($message) use ($medic, $date, $hour, $type){
             $message->to($medic->email)->subject("Programare noua $type $date $hour");
         });

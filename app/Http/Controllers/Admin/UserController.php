@@ -52,36 +52,47 @@ class UserController extends Controller
      */
     public function store()
     {
-        $validatedData = request()->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'lname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
-            'user_id' => ['nullable', 'integer'],
-            'speciality_id' => ['nullable', 'integer'],
-            'working_plan' => ['nullable', 'json'],
-            'is_admin' => ['nullable', 'integer'],
-        ]);
 
-        $user = User::create([
-            'name' => request('name'),
-            'lname' => request('lname'),
-            'email' => request('email'),
-            'email_verified_at' => now(),
-            'password' => Hash::make(request('password')),
-        ]);
+        if(request('tip_cont') === 'medic') {
+            request()->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'lname' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8'],
+                'speciality' => ['required', 'integer'],
+            ]);
 
-        if(request('speciality') != null) {
+
+            $user = User::create([
+                'name' => request('name'),
+                'lname' => request('lname'),
+                'email' => request('email'),
+                'email_verified_at' => now(),
+                'password' => Hash::make(request('password')),
+            ]);
             UserSettings::create([
                 'user_id' => $user->id,
                 'speciality_id' => request('speciality'),
                 'working_plan' => request('working_plan'),
-                'is_admin' => request('is_admin'),
+                'is_admin' => request('is_admin') == 'on' ? 1 : 0,
             ]);
         }else{
+            request()->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'lname' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8'],
+            ]);
+            $user = User::create([
+                'name' => request('name'),
+                'lname' => request('lname'),
+                'email' => request('email'),
+                'email_verified_at' => now(),
+                'password' => Hash::make(request('password')),
+            ]);
             UserSettings::create([
                 'user_id' => $user->id,
-                'working_plan' => request('working_plan'),
+                'working_plan' => null,
                 'is_admin' => 1,
             ]);
         }

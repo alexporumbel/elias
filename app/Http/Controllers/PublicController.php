@@ -61,7 +61,7 @@ class PublicController extends Controller
         $medic = User::where('id', request('medic'))->first();
         $speciality = MedicalSpeciality::where('id', request('speciality'))->first();
         $mailController->sendMail($start_datetime, request('name'), request('lname'), request('medic'), 'ambulatory');
-        return redirect()->route('homepage')->with('success',"Esti programat pe  ". $date ." ora ". $hour ." la ". $speciality->name .", Dr. ". $medic->name ." ". $medic->lname);
+        return redirect()->route('homepage')->with('success',"Esti programat pe  ". $start_datetime->format('d.m.Y') ." ora ". $start_datetime->format('H:i') ." la ". $speciality->name .", Dr. ". $medic->name ." ". $medic->lname);
     }
 
     public function createRecovery()

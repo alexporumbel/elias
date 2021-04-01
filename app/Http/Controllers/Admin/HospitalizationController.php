@@ -73,13 +73,13 @@ class HospitalizationController extends Controller
             'email' => request('email'),
             'phone' => request('phone'),
             'user_provider_id' => request('medic'),
-            'start_datetime' => new \DateTime(request('selectedDate') + ' 8:00'),
+            'start_datetime' => new \DateTime(request('selectedDate') . ' 8:00'),
             'appointment_type' => request('appointmentType'),
             'hospitalization_type' => request('hospitalizationType'),
             'notes' => request('notes'),
         ]);
 
-        $mailController->sendMail(new \DateTime(request('selectedDate') + ' 8:00', request('name'), request('lname'), request('medic'), 'hospitalization');
+        $mailController->sendMail(new \DateTime(request('selectedDate') . ' 8:00'), request('name'), request('lname'), request('medic'), 'hospitalization');
         return redirect(route('hospitalization'));
     }
 

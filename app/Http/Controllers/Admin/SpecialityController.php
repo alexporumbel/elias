@@ -46,7 +46,7 @@ class SpecialityController extends Controller
     {
         $this->validateSpeciality();
 
-        $speciality = new MedicalSpeciality(request(['name', 'is_paid']));
+        $speciality = new MedicalSpeciality();
         $speciality->name = request('name');
         $speciality->is_paid = request('is_paid') == 'on' ? 1 : 0;
         $speciality->save();
