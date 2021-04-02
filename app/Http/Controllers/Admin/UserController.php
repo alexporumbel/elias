@@ -97,7 +97,7 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect(route('users.index'));
+        return redirect()->route('users.index')->with('success','Utilizatorul a fost adaugat');
     }
 
     /**
@@ -164,7 +164,7 @@ class UserController extends Controller
             $userSettings->update();
         }
 
-        return redirect(route('users.index'));
+        return redirect()->route('users.index')->with('info','Utilizatorul a fost modificat');
     }
 
     /**
@@ -176,7 +176,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return back();
+        return redirect()->back()->with('warning', 'Utilizatorul a fost sters');
     }
 
 

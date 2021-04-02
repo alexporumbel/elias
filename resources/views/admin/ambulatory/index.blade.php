@@ -21,6 +21,12 @@
     <script src="/assets/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script>
         $(function () {
+            @if ($message = Session::get('success'))
+                toastr["success"]("{{ $message }}");
+            @elseif($message = Session::get('warning'))
+                toastr["error"]("{{ $message }}");
+            @endif
+
             $("#example2").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["csv", "excel", "pdf", "print", "colvis"]

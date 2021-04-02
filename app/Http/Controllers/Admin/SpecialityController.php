@@ -51,7 +51,7 @@ class SpecialityController extends Controller
         $speciality->is_paid = request('is_paid') == 'on' ? 1 : 0;
         $speciality->save();
 
-        return redirect(route('specialities.index'));
+        return redirect()->route('specialities.index')->with('success','Specialitatea a fost adaugata');
     }
 
     /**
@@ -80,7 +80,7 @@ class SpecialityController extends Controller
         $speciality->name = request('name');
         $speciality->is_paid = request('is_paid') == 'on' ? 1 : 0;
         $speciality->update();
-        return redirect(route('specialities.index'));
+        return redirect()->route('specialities.index')->with('info','Specialitatea a fost modificata');
     }
 
     /**
@@ -92,7 +92,7 @@ class SpecialityController extends Controller
     public function destroy(MedicalSpeciality $speciality)
     {
         $speciality->delete();
-        return back();
+        return redirect()->back()->with('warning', 'Specialitatea a fost stearsa');
     }
 
 

@@ -81,8 +81,8 @@ class AmbulatoryController extends Controller
 
         $mailController->sendMail($start_datetime, request('name'), request('lname'), request('medic'), 'ambulatory');
 
-        return redirect(route('ambulatory'));
-    }
+        return redirect()->route('ambulatory')->with('success','Programarea a fost adaugata');
+        }
 
 
     /**
@@ -94,6 +94,6 @@ class AmbulatoryController extends Controller
     public function destroy(Ambulatory $ambulatory)
     {
         $ambulatory->delete();
-        return back();
+        return redirect()->back()->with('warning', 'Programarea a fost stearsa');
     }
 }

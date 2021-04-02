@@ -15,6 +15,13 @@
     <script src="/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
     <script>
         $(function () {
+            @if ($message = Session::get('success'))
+                toastr["success"]("{{ $message }}");
+            @elseif($message = Session::get('info'))
+                toastr["warning"]("{{ $message }}");
+            @elseif($message = Session::get('warning'))
+                toastr["error"]("{{ $message }}");
+            @endif
             $('#example2').DataTable({
                 "paging": true,
                 "lengthChange": false,

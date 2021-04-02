@@ -14,8 +14,7 @@ class CreateUserSettingsTable extends Migration
     public function up()
     {
         Schema::create('user_settings', function (Blueprint $table) {
-            $table->primary('user_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->index();
             $table->unsignedBigInteger('speciality_id')->nullable();
             $table->tinyInteger('is_admin')->default(0);
             $table->text('working_plan')->nullable();

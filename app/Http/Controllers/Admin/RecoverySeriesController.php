@@ -58,7 +58,7 @@ class RecoverySeriesController extends Controller
             'capacity' => request('capacity'),
         ]);
 
-        return redirect(route('recoveryseries.index'));
+        return redirect()->route('recoveryseries.index')->with('success','Seria a fost adaugata');
     }
 
     /**
@@ -95,7 +95,7 @@ class RecoverySeriesController extends Controller
         $recoveryseries->end_date = request('end_datetime');
         $recoveryseries->capacity = request('capacity');
         $recoveryseries->update();
-        return redirect(route('recoveryseries.index'));
+        return redirect()->route('recoveryseries.index')->with('info','Seria a fost modificata');
     }
 
     /**
@@ -107,7 +107,7 @@ class RecoverySeriesController extends Controller
     public function destroy(RecoverySeries $recoveryseries)
     {
         $recoveryseries->delete();
-        return back();
+        return redirect()->back()->with('warning', 'Seria a fost stearsa');
     }
 
 

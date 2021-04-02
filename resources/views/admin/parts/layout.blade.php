@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="/assets/plugins/toastr/toastr.min.css">
     @yield('head')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -167,7 +168,28 @@
 <!-- ChartJS -->
 @yield('footer')
 <script src="/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="/assets/plugins/toastr/toastr.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/assets/dist/js/adminlte.js"></script>
+
+<script>
+    toastr.options = {
+        "closeButton": false,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-bottom-right",
+        "preventDuplicates": true,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+</script>
 </body>
 </html>

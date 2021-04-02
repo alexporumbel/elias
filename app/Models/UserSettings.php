@@ -27,7 +27,7 @@ class UserSettings extends Model
 
     public function is_admin()
     {
-        if($this->where('is_admin', 1)->first()){
+        if($this->is_admin == 1){
             return true;
         }else{
             return false;

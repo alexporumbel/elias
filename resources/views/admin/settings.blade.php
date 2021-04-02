@@ -1,4 +1,14 @@
 @extends('admin.parts.layout')
+@section('footer')
+    <script>
+        $(function () {
+            @if ($message = Session::get('success'))
+                toastr["success"]("{{ $message }}");
+            @endif
+        });
+    </script>
+@endsection
+
 @section('content')
 
     <div class="content-wrapper">

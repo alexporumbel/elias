@@ -80,7 +80,7 @@ class HospitalizationController extends Controller
         ]);
 
         $mailController->sendMail(new \DateTime(request('selectedDate') . ' 8:00'), request('name'), request('lname'), request('medic'), 'hospitalization');
-        return redirect(route('hospitalization'));
+        return redirect()->route('hospitalization')->with('success','Programarea a fost adaugata');
     }
 
 
@@ -93,6 +93,6 @@ class HospitalizationController extends Controller
     public function destroy(Hospitalization $hospitalization)
     {
         $hospitalization->delete();
-        return back();
+        return redirect()->back()->with('warning', 'Programarea a fost stearsa');
     }
 }

@@ -43,8 +43,7 @@ class SettingsController extends Controller
             Settings::where('name', 'mail_password')->update(['value' => request('password')]);
         }
 
-        return redirect(route('settings'));
-
+        return redirect()->route('settings')->with('success','Setarile au fost modificate');
 
     }
 }

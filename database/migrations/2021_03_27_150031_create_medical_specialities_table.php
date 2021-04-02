@@ -17,11 +17,6 @@ class CreateMedicalSpecialitiesTable extends Migration
             $table->id();
             $table->string('name');
             $table->tinyInteger('is_paid')->default(0);
-
-            $table->foreign('id')
-                ->references('speciality_id')
-                ->on('user_settings')
-                ->nullOnDelete();
         });
     }
 

@@ -65,7 +65,7 @@ class RecoveryController extends Controller
             'end_date' => RecoverySeries::where('id', request('series'))->first()->end_date,
             'appointment_type' => request('appointmentType'),
         ]);
-        return redirect(route('recovery'));
+        return redirect()->route('recovery')->with('success','Rezervarea a fost adaugata');
     }
 
 
@@ -78,6 +78,6 @@ class RecoveryController extends Controller
     public function destroy(Recovery $recovery)
     {
         $recovery->delete();
-        return back();
+        return redirect()->back()->with('warning', 'Rezervarea a fost stearsa');
     }
 }
